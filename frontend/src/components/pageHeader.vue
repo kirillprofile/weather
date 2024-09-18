@@ -4,17 +4,17 @@ import TemperatureToggle from './temperatureToggle.vue';
 import { ref, defineEmits } from 'vue';
 
 const emit = defineEmits(['forwardingCityInput', 'temperatureChanged']);
-const temperatureType = ref('celsius');
+const temperatureType = ref('metric');
 
 const forwardingCityInput = (city) => {
     emit('forwardingCityInput', {
         city: city,
-        type: temperatureType.value
+        units: temperatureType.value
     });
 }
 
-const temperatureChanged = (type) => {
-    temperatureType.value = type;
+const temperatureChanged = (units) => {
+    temperatureType.value = units;
 }
 </script>
 
@@ -22,7 +22,7 @@ const temperatureChanged = (type) => {
     <header class="d-flex flex-column align-items-center p-3">
         <div class="header-content d-flex align-items-center w-100 justify-content-between">
             <div class="logo-title-container d-flex align-items-center me-3">
-                <img src="@/assets/icons/logo.png" alt="Logo" class="logo me-2" />
+                <img src="" alt="Logo" class="logo me-2" /><!--src="@/assets/icons/logo.png"-->
                 <h1 class="title mb-0">Simple Weather</h1>
             </div>
             <div class="search-toggle-container d-flex align-items-center gap-3 flex-grow-1">

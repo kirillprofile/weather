@@ -1,43 +1,40 @@
-  <script setup>
-  import pageHeader from './components/pageHeader.vue';
-  import nowForecastDisplay from './components/nowForecastDisplay.vue';
-  import { ref } from 'vue';
+<script setup>
+import pageHeader from './components/pageHeader.vue';
+import nowForecastDisplay from './components/nowForecastDisplay.vue';
+import todaysForecst from './components/todaysForecst.vue';
+import weatherDetails from './components/weatherDetails.vue';
 
-  const weatherData = ref(null);
-  const showNowForecastDisplay = ref(false);
+import { ref } from 'vue';
+import axios from 'axios';
 
-  const forwardingCityOperator = (city) => {
-    // api implementation
-    weatherData.value = {
-        'now': {
-          'city': city.city,
-          'temperature_max': 12,
-          'temperature_min': -3
-        },
-        'now_details': {
-          'sunrise': '8:18',
-          'sunset': '18:40',
-          'chance_of_rain': 21,
-          'pressure': 1023
-        },
-        'todays_forecast': {
-          '6:00': '',
-          '9:00': '',
-          '12:00': '',
-          '15:00': '',
-        }
-    }
+const weatherData = ref(null);
+
+const forwardingCityOperator = async (searchData) => {
+  try {
+    const response = await axios.get(`http://localhost:8000/weather/${searchData.city}`, {
+      params: { units: searchData.units }
+    });
+
+    weatherData.value = response.data;
   }
+  catch (error) {
+    console.error('Error fetching weather data: ', error);
+  }
+}
+</script>
 
-  </script>
-
-
-  <template>
-    -><div v-if="showNowForecastDisplay">{{ weatherData.now }}</div>
+<template>
+  <div>
     <pageHeader @forwardingCityInput="forwardingCityOperator"/>
     <nowForecastDisplay v-if="weatherData" :weatherNow="weatherData.now"/>
-  </template>
+    <todaysForecst v-if="weatherData" :weatherIntervalsNow="weatherData.todays_forecast" style="margin-top: 2rem;"/> 
+    <weatherDetails v-if="weatherData" :weatherDetails="weatherData.now_details" style="margin-top: 2rem;"/>
+  </div>
+</template>
 
-  <style>
-
-  </style>
+<style>
+/* Custom margin to position the component lower */
+.mt-4 {
+  margin-top: 5rem; /* Adjust as needed for desired spacing */
+}
+</style>

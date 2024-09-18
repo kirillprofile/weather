@@ -1,13 +1,13 @@
 <template>
     <div class="type-switch">
       <div 
-        @click="setTemperature('celsius')" 
-        :class="['toggle-button', { active: temperature === 'celsius', inactive: temperature !== 'celsius' }]">
+        @click="setTemperature('metric')" 
+        :class="['toggle-button', { active: temperature === 'metric', inactive: temperature !== 'metric' }]">
         °C
       </div>
       <div 
-        @click="setTemperature('fahrenheit')" 
-        :class="['toggle-button', { active: temperature === 'fahrenheit', inactive: temperature !== 'fahrenheit' }]">
+        @click="setTemperature('imperial')" 
+        :class="['toggle-button', { active: temperature === 'imperial', inactive: temperature !== 'imperial' }]">
         °F
       </div>
     </div>
@@ -17,7 +17,7 @@
   import { ref, defineEmits } from 'vue';
   
   const emit = defineEmits(['temperatureChanged']);
-  const temperature = ref('celsius'); 
+  const temperature = ref('metric'); 
   
   const setTemperature = (type) => {
     temperature.value = type;
@@ -39,7 +39,7 @@
     transition: background-color 0.3s, color 0.3s;
   }
   .active {
-    background-color: #007bff;
+    background-color: #5c6bc0;
     color: white;
   }
   .inactive {

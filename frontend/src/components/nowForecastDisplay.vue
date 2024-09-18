@@ -1,16 +1,16 @@
 <script setup>
 import { defineProps } from 'vue';
 
-// Определение пропсов
+// Define props
 const props = defineProps({
     weatherNow: Object,
 });
 </script>
 
 <template>
-  <div class="container mt-4">
+  <div class="container mt-4 d-flex justify-content-center align-items-center">
     <div class="weather-card d-flex align-items-center p-3">
-      <!-- Блок с текстом -->
+      <!-- Text block -->
       <div class="weather-text d-flex flex-column flex-grow-1 me-3">
         <h1 class="city-name mb-2">{{ weatherNow?.city }}</h1>
         <div class="d-flex align-items-baseline">
@@ -19,7 +19,7 @@ const props = defineProps({
         </div>
       </div>
 
-      <!-- Картинка справа -->
+      <!-- Image on the right -->
       <img 
         src="@/assets/icons/weather.png" 
         alt="Weather Icon"
@@ -30,7 +30,7 @@ const props = defineProps({
 </template>
 
 <style>
-/* Используем шрифт из Google Fonts или другого источника */
+/* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@300;600&display=swap');
 
 .weather-card {
@@ -46,22 +46,22 @@ const props = defineProps({
 
 .city-name {
   font-family: 'Roboto', sans-serif;
-  font-size: rem; /* Увеличиваем размер шрифта для названия города */
-  font-weight: 600; /* Убираем жирное начертание */
+  font-size: 2rem; /* Adjust font size as needed */
+  font-weight: 600;
   color: #333;
   margin-bottom: 0.5rem;
 }
 
 .temperature-max {
   font-family: 'Open Sans', sans-serif;
-  font-size: 3rem; /* Устанавливаем размер шрифта для максимальной температуры */
+  font-size: 3rem;
   font-weight: normal;
   color: #333;
 }
 
 .temperature-min {
   font-family: 'Open Sans', sans-serif;
-  font-size: 2rem; /* Устанавливаем размер шрифта для минимальной температуры */
+  font-size: 2rem;
   font-weight: 300;
   color: #888;
 }
