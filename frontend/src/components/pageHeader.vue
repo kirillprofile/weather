@@ -1,20 +1,39 @@
 <script setup>
-import SearchLine from './searchLine.vue';
-import TemperatureToggle from './temperatureToggle.vue';
+import SearchLine from './search/searchLine.vue';
+import TemperatureToggle from './search/temperatureToggle.vue';
+import ModeToggle from './search/modeToggle.vue';
 import { ref, defineEmits } from 'vue';
 
-const emit = defineEmits(['forwardingCityInput', 'temperatureChanged']);
-const temperatureType = ref('metric');
+const emit = defineEmits(['forwardingCityInput', 'unitsChangeDynamic', 'modeChangeDynamic']);
+const units = ref('metric');
+const modeParam = ref('now');
+const cityName = ref(''); // Ref to store the city name
 
 const forwardingCityInput = (city) => {
+    cityName.value = city; // Store the city name
     emit('forwardingCityInput', {
         city: city,
-        units: temperatureType.value
+        units: units.value,
+        mode: modeParam.value
     });
 }
 
-const temperatureChanged = (units) => {
-    temperatureType.value = units;
+const unitsChangeDynamic = (type) => {
+    units.value = type;
+    emit('unitsChangeDynamic', {
+        units: units.value,
+        city: cityName.value, // Pass the city name
+        mode: modeParam.value
+    });
+}
+
+const modeChangedDynamic = (mode) => {
+    modeParam.value = mode;
+    emit('modeChangeDynamic', {
+        units: units.value,
+        city: cityName.value, // Pass the city name
+        mode: modeParam.value
+    });
 }
 </script>
 
@@ -25,11 +44,14 @@ const temperatureChanged = (units) => {
                 <img src="" alt="Logo" class="logo me-2" /><!--src="@/assets/icons/logo.png"-->
                 <h1 class="title mb-0">Simple Weather</h1>
             </div>
+            <div>
+                <ModeToggle @modeChanged="modeChangedDynamic"/>
+            </div>
             <div class="search-toggle-container d-flex align-items-center gap-3 flex-grow-1">
                 <div class="search-wrapper flex-grow-1">
                     <SearchLine @forwardingCityInput="forwardingCityInput" />
                 </div>
-                <TemperatureToggle @temperatureChanged="temperatureChanged" />
+                <TemperatureToggle @unitsChange="unitsChangeDynamic" />
             </div>
         </div>
     </header>
